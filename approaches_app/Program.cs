@@ -15,7 +15,6 @@ namespace approaches_app
             //Create(product);
             Read();
         }
-        //Read
         public static void Read()
         {
             //Read
@@ -30,13 +29,36 @@ namespace approaches_app
         }
         public static void Create(Product product)
         {
-            //Create
             using (var db = new ShopEntities())
             {
                 db.Products.Add(product);
                 db.SaveChanges();
             }
-            Console.ReadKey();
+        }
+        public static void Update(int id, Product product)
+        {
+            using (var db = new ShopEntities())
+            {
+                var product_to_update = db.Products.Find(id);
+                if (product_to_update != null)
+                {
+                    product_to_update.Name = product.Name;
+                    product_to_update.Price = product.Price;
+                    db.SaveChanges();
+                }
+            }
+        }
+        public static void Delete(int id)
+        {
+            using (var db = new ShopEntities())
+            {
+                var product = db.Products.Find(id);
+                if(product != null)
+                {
+                    db.Products.Remove(product);
+                    db.SaveChanges();
+                }
+            }
         }
     }
 }
